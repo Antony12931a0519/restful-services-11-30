@@ -15,6 +15,11 @@ public class UserService {
 		return userDAO.getUsersList();
 	}
 
+	public UserModel getUserDetailsById(String emailId) throws SQLException {
+
+		return userDAO.getUserDetailsById(emailId);
+	}
+
 	public String insertDataIntoUser(UserModel userModel) {
 
 		int res = userDAO.insertDataIntoUser(userModel);
@@ -24,20 +29,40 @@ public class UserService {
 			return "Students details are failed to  add.";
 
 	}
-	
+
 	public String updateUser(UserModel userModel) {
 
 		int res = userDAO.updateUser(userModel);
 		if (res != 0)
-			return "User details are update.";
+			return "User details are updated.";
 		else
 			return "User details are failed to  update.";
 
 	}
-	
+
 	public String deleteUser(UserModel userModel) {
 
 		int res = userDAO.deleteUser(userModel);
+		if (res != 0)
+			return "User details are deleted.";
+		else
+			return "User details are failed to  delete.";
+
+	}
+
+	public String updateUserById(UserModel userModel, String emailId) {
+
+		int res = userDAO.updateUserById(userModel, emailId);
+		if (res != 0)
+			return "User details are updated.";
+		else
+			return "User details are failed to  update.";
+
+	}
+
+	public String deleteUserById(String emailId) {
+
+		int res = userDAO.deleteUserById(emailId);
 		if (res != 0)
 			return "User details are deleted.";
 		else

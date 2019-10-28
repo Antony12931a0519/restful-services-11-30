@@ -44,6 +44,26 @@ public class DBConnection {
 		return rs;
 	}
 
+	public static ResultSet getUserDetailsById(String emailId) {
+		ResultSet rs = null;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/braingain", "root", "root");
+
+			String sql = "select * from users where emailId=?";
+			PreparedStatement stmt = con.prepareStatement(sql);
+			stmt.setString(1, emailId);
+
+			rs = stmt.executeQuery();
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return rs;
+	}
+
 	public static int insertDataIntoUser(UserModel userModel) {
 		int result = 0;
 
@@ -60,6 +80,26 @@ public class DBConnection {
 			preparedStatement.setString(4, userModel.getCity());
 			preparedStatement.setString(5, userModel.getPhoneNumber());
 			preparedStatement.setString(6, userModel.getPassword());
+
+			result = preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return result;
+	}
+
+	public static int updateUserById(UserModel userModel, String emailId) {
+		int result = 0;
+
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/braingain", "root", "root");
+			String sql = "update users set fullname=? where emailid=?";
+			PreparedStatement preparedStatement = con.prepareStatement(sql);
+
+			preparedStatement.setString(1, userModel.getFullName());
+			preparedStatement.setString(2, emailId);
 
 			result = preparedStatement.executeUpdate();
 		} catch (Exception e) {
@@ -87,7 +127,7 @@ public class DBConnection {
 		}
 		return result;
 	}
-	
+
 	public static int deleteUser(UserModel userModel) {
 		int result = 0;
 
@@ -107,5 +147,23 @@ public class DBConnection {
 		return result;
 	}
 
+	public static int deleteUserById(String emailId) {
+		int result = 0;
+
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/braingain", "root", "root");
+			String sql = "delete from users where emailid=?";
+			PreparedStatement preparedStatement = con.prepareStatement(sql);
+
+			preparedStatement.setString(1, emailId);
+
+			result = preparedStatement.executeUpdate();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return result;
+	}
 
 }
